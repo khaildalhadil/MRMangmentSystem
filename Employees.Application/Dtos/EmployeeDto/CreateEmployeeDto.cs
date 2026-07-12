@@ -18,13 +18,14 @@ public class CreateEmployeeDto
     public int Age { get; set; }
     public Boolean IsMar { get; set; }
     public Boolean WorkNow { get; set; }
-    
 
 
-    public static Employee ToEntity(CreateEmployeeDto dto)
+
+    public static Employee ToEntity(CreateEmployeeDto dto, int id = 0)
     {
         return new Employee
         {
+            Id = id,
             Name = dto.Name,
             Department = dto.Department,
             Age = dto.Age,

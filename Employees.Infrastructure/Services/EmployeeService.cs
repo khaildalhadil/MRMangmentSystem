@@ -12,6 +12,7 @@ public class EmployeeService(EmpDbContext empDb) : IEmployeeService
     private readonly EmpDbContext _context = empDb;
     public Task<List<Employee>> GetAllEmps()
     {
+        // bus logic
         return _context.Employees.ToListAsync();
     }
 
@@ -28,9 +29,9 @@ public class EmployeeService(EmpDbContext empDb) : IEmployeeService
         return employee;
     }
 
-    public async Task<Employee> UpdateEmp(CreateEmployeeDto employeeDto)
+    public async Task<Employee> UpdateEmp(int id ,CreateEmployeeDto employeeDto)
     {
-        Employee employee = CreateEmployeeDto.ToEntity(employeeDto);
+        Employee employee = CreateEmployeeDto.ToEntity(employeeDto, id);
         _context.Employees.Update(employee);
         await _context.SaveChangesAsync();
         return employee;

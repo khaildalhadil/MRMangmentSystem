@@ -8,6 +8,6 @@ public interface IEmployeeService
     Task<List<Employee>> GetAllEmps();
     Task<Employee> GetEmpByID(int id);
     Task<Employee> AddEmployee(CreateEmployeeDto employeeDto);
-    Task<Employee> UpdateEmp(CreateEmployeeDto employeeDto);
+    Task<Employee> UpdateEmp(int id ,CreateEmployeeDto employeeDto);
     void DeleteEmp(Employee employee);
 }

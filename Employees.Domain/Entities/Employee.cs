@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace HRMangment.Domain.Entities;
 
@@ -16,4 +17,6 @@ public class Employee
     public int Age { get; set; }
     public Boolean IsMar { get; set; }
     public Boolean WorkNow { get; set; }
+
+
 }

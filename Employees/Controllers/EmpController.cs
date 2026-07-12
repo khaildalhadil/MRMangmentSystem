@@ -39,7 +39,7 @@ public class EmployeesController(IEmployeeService employeeService, ILogger<Emplo
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEmployee([FromRoute] int id, [FromBody] CreateEmployeeDto employeeToUpdate)
     {
-        var employee = await _service.UpdateEmp(employeeToUpdate);
+        var employee = await _service.UpdateEmp(id, employeeToUpdate);
         if (employee is null) return NotFound($"Employee with ID: {id} not found.");
         return Ok(employee);
     }
