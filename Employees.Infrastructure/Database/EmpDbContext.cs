@@ -9,4 +9,5 @@ public class EmpDbContext(DbContextOptions<EmpDbContext> options) :
     IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options)
 {
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Department> Departements { get; set; }
 }

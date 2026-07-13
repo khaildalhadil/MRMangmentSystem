@@ -2,6 +2,7 @@
 using HRMangment.Domain.IdentityEntities;
 using HRMangment.Infrastructure.Database;
 using HRMangment.Infrastructure.services;
+using HRMangment.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public static class DependencyInjection
         services.AddDbContext<EmpDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         //services.AddIdentityApiEndpoints<ApplicationUser>()
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IDepartmentService, DepartmentService>();
 
     }
 }
