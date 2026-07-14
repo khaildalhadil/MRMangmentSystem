@@ -19,5 +19,10 @@ public static class DependencyInjection
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
 
+        //services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+        //{
+
+        //})
+
     }
 }
