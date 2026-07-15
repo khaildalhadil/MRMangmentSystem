@@ -35,13 +35,13 @@ public class AccountController(
             return Problem(errors);
         }
 
-        // check if user alredy in db
-        //var exists = await _userManager.FindByEmailAsync(registerDTO.Email);
+        //check if user alredy in db
+       var exists = await _userManager.FindByEmailAsync(registerDTO.Email);
 
-        //if (exists != null)
-        //{
-        //    return BadRequest(new { message = "Email is already Exists" });
-        //}
+        if (exists != null)
+        {
+            return BadRequest(new { message = "Email is already Exists" });
+        }
 
 
         //2) make user object
@@ -67,7 +67,7 @@ public class AccountController(
         else
         {
             string errors = string.Join(" | ", result.Errors.Select(e => e.Description));
-            return Problem(errors);
+            return BadRequest(errors);
         }
     }
 
@@ -85,19 +85,19 @@ public class AccountController(
             return Problem(errors);
         }
 
-        var res = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, isPersistent: false, lockoutOnFailure: false);
+        var userFromDb = await _userManager.FindByEmailAsync(loginDto.Email);
+        if (userFromDb is null) return Unauthorized();
+
+        var res = await _signInManager.CheckPasswordSignInAsync(userFromDb, loginDto.Password, lockoutOnFailure: false);
 
         if (res.Succeeded)
         {
-            ApplicationUser? user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user is null) return NoContent();
-            return Ok(user);
+            return Ok(userFromDb);
         }
         else
         {
-            Problem("Invalid Email and Password");
+            return Unauthorized("Invalid Email and Password");
         }
-        return NoContent();
     }
 
     [HttpGet]
