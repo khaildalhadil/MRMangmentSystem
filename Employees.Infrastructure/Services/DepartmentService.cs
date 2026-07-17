@@ -1,34 +1,53 @@
-﻿using HRMangment.Application.Dtos.EmployeeDto;
+﻿using HRMangment.Application.Dtos.DepartmentDto;
 using HRMangment.Application.Interfaces;
 using HRMangment.Domain.Entities;
+using HRMangment.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRMangment.Infrastructure.Services;
 
-public class DepartmentService : IDepartmentService
+public class DepartmentService(EmpDbContext empDbContext) : IDepartmentService
 {
-    public Task<List<Department>> GetAllDepartment()
+    private readonly EmpDbContext empDbContext = empDbContext;
+    public Task<List<Department>> GetAllDepartmentAsync()
     {
-        throw new NotImplementedException();
+        return empDbContext.Departements.ToListAsync();
     }
 
-    public Task<Department> GetDepartmentByID(int id)
+    public async Task<Department>? GetDepartmentByID(int id)
     {
-        throw new NotImplementedException();
+        var emp = await empDbContext.Departements.FindAsync(id);
+        if (emp != null)
+        {
+            return emp;
+        }
+        return null;
     }
 
-    public Task<Department> UpdateDepartment(int id, CreateDepartmentDto departmentDto)
+    public async Task<Department> UpdateDepartment(int id, CreateDepartmentDto departmentDto)
     {
-        throw new NotImplementedException();
+
+        Department department = CreateDepartmentDto.ToEntity(departmentDto, id);
+        empDbContext.Departements.Update(department);
+        await empDbContext.SaveChangesAsync();
+        return department;
     }
 
-    public Task<Department> AddDepartment(CreateDepartmentDto departmentDto)
+    public async Task<Department> AddDepartment(CreateDepartmentDto departmentDto)
     {
-        throw new NotImplementedException();
+        Department department = CreateDepartmentDto.ToEntity(departmentDto);
+        await empDbContext.Departements.AddAsync(department);
+        await empDbContext.SaveChangesAsync();
+        return department;
     }
 
-    public void DeleteEmp(Department departement)
+    public async Task DeleteEmp(int id)
     {
-        throw new NotImplementedException();
+
+        var emp = await this.GetDepartmentByID(id);
+        empDbContext.Departements.Remove(emp);
+        await empDbContext.SaveChangesAsync();
     }
+
 
 }

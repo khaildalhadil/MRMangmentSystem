@@ -13,16 +13,8 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        
         services.AddDbContext<EmpDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-        //services.AddIdentityApiEndpoints<ApplicationUser>()
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
-
-        //services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-        //{
-
-        //})
-
     }
 }
