@@ -1,4 +1,5 @@
-﻿using HRMangment.Application.Dtos.UserDto;
+﻿using HRMangment.Application.Dtos.AuthDto;
+using HRMangment.Application.Dtos.UserDto;
 using HRMangment.Domain.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HRMangment.Api.Controllers;
 
-[Route("api/[controller]/[action]")]
 [ApiController]
+[Route("api/[controller]/[action]")]
 [AllowAnonymous]
-public class AccountController(
+public class AuthController(
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
     RoleManager<ApplicationRole> roleManager
@@ -47,8 +48,9 @@ public class AccountController(
         //2) make user object
         ApplicationUser user = new ApplicationUser()
         {
-
-            UserName = registerDTO.UserName,
+            FirstName = registerDTO.FirstName,
+            LastName = registerDTO.LastName,
+            UserName = registerDTO.Email,
             PhoneNumber = registerDTO.PhoneNumber,
             Email = registerDTO.Email,
         };
@@ -60,7 +62,7 @@ public class AccountController(
         if(result.Succeeded)
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return Ok(user);
+            return Ok(RegisterdUserDto.RegisterdUserDtoEntity(user));
 
         // 5) check if usre not stored succee
         }
@@ -86,13 +88,13 @@ public class AccountController(
         }
 
         var userFromDb = await _userManager.FindByEmailAsync(loginDto.Email);
-        if (userFromDb is null) return Unauthorized();
+        if (userFromDb is null) return Unauthorized("Invalid Email and Password");
 
         var res = await _signInManager.CheckPasswordSignInAsync(userFromDb, loginDto.Password, lockoutOnFailure: false);
 
         if (res.Succeeded)
         {
-            return Ok(userFromDb);
+            return Ok(RegisterdUserDto.RegisterdUserDtoEntity(userFromDb));
         }
         else
         {

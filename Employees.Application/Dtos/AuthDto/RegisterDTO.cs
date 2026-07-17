@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace HRMangment.Application.Dtos.UserDto;
-public class RegisterDTO
+public class RegisterDTO: LoginDto
 {
+
     [Required]
-    public string UserName { get; set; } = string.Empty;
+    [MaxLength(100)]
+    [MinLength(2)]
+    public string FirstName { get; set; } = string.Empty;
 
-
-    [Required(ErrorMessage = "Email con't be blank")]
-    [EmailAddress(ErrorMessage = "Email should be in a proper email address format")]
-    public string Email { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(100)]
+    [MinLength(2)]
+    public string LastName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "PhoneNumber con't be blank")]
     public string PhoneNumber { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Password con't be blank")]
-    public string Password { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "ConfirmPassword con't be blank")]
     [Compare("Password", ErrorMessage = "Password and confirm password do not match")]

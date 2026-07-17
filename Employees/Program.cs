@@ -28,7 +28,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = true;
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
 }).AddEntityFrameworkStores<EmpDbContext>()
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, EmpDbContext, Guid>>()
