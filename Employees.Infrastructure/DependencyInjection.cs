@@ -6,6 +6,8 @@ using HRMangment.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HRMangment.Infrastructure;
 
@@ -17,5 +19,18 @@ public static class DependencyInjection
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IJwtService, JwtService>();
+
+        //services.AddAuthentication()
+        //    .AddJwtBearer(options =>
+        //    {
+        //        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        //        {
+        //            ValidateIssuer = false,
+        //            ValidateAudience = false,
+        //            ValidateLifetime = true,
+        //            ValidateIssuerSigningKey = true,
+        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]??string.Empty))
+        //        };
+        //    });
     }
 }

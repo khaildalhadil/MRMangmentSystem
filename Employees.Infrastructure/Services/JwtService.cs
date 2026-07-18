@@ -31,7 +31,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
             new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString() ),
 
             // unique name identifier of the user (Email)
-            new Claim(ClaimTypes.NameIdentifier, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Email ?? string.Empty),
 
             // name of the user
             new Claim(ClaimTypes.Name, user.FirstName),

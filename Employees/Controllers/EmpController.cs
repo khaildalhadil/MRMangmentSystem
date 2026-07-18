@@ -1,9 +1,11 @@
 ﻿using HRMangment.Application.Dtos.EmployeeDto;
 using HRMangment.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRMangment.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class EmployeesController(IEmployeeService employeeService, ILogger<EmployeesController> logger) : Controller
