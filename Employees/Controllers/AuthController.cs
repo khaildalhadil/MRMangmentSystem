@@ -1,5 +1,6 @@
 ﻿using HRMangment.Application.Dtos.AuthDto;
 using HRMangment.Application.Dtos.UserDto;
+using HRMangment.Application.Interfaces;
 using HRMangment.Domain.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,8 @@ namespace HRMangment.Api.Controllers;
 public class AuthController(
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
-    RoleManager<ApplicationRole> roleManager
+    RoleManager<ApplicationRole> roleManager,
+    IJwtService jwtService
     ) : Controller
 {
 
@@ -62,7 +64,11 @@ public class AuthController(
         if(result.Succeeded)
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return Ok(RegisterdUserDto.RegisterdUserDtoEntity(user));
+
+            // get token 
+            var userWithToken = jwtService.CreateJwtToken(user);
+            
+            return Ok(userWithToken);
 
         // 5) check if usre not stored succee
         }
@@ -94,7 +100,9 @@ public class AuthController(
 
         if (res.Succeeded)
         {
-            return Ok(RegisterdUserDto.RegisterdUserDtoEntity(userFromDb));
+            // get token 
+            var userWithToken = jwtService.CreateJwtToken(userFromDb);
+            return Ok(userWithToken);
         }
         else
         {

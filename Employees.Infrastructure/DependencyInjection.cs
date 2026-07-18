@@ -16,5 +16,6 @@ public static class DependencyInjection
         services.AddDbContext<EmpDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
+        services.AddScoped<IJwtService, JwtService>();
     }
 }
