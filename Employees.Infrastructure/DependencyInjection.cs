@@ -1,13 +1,10 @@
 ﻿using HRMangment.Application.Interfaces;
-using HRMangment.Domain.IdentityEntities;
 using HRMangment.Infrastructure.Database;
 using HRMangment.Infrastructure.services;
 using HRMangment.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace HRMangment.Infrastructure;
 
@@ -29,8 +26,40 @@ public static class DependencyInjection
         //            ValidateAudience = false,
         //            ValidateLifetime = true,
         //            ValidateIssuerSigningKey = true,
-        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]??string.Empty))
+        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? string.Empty))
         //        };
         //    });
+
+        // if now athu.jwtbearer in program.cs
+
+        //services.AddAuthentication(options =>
+        //{
+        //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //}).AddJwtBearer(options =>
+        //    {
+        //        options.TokenValidationParameters = 
+        //            new TokenValidationParameters()
+        //            {
+        //                ValidateAudience = true,
+        //                ValidAudience = configuration["Jwt:Audience"],
+        //                ValidateIssuer = true,
+        //                ValidIssuer = configuration["Jwt:Issuer"],
+        //                ValidateLifetime = true,
+        //                ValidateIssuerSigningKey = true,
+        //                IssuerSigningKey = 
+        //                    new SymmetricSecurityKey(
+        //                        System.Text.Encoding.UTF8.GetBytes(
+        //                            configuration["Jwt:Key"] ?? string.Empty
+        //                            )
+        //                        )
+
+        //            };
+        //    });
+
+        //services.AddAuthorization();
+
+
+
     }
 }
